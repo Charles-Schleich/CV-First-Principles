@@ -2,7 +2,7 @@ use imageproc::window::display_image;
 use std::env;
 
 mod binary_proc;
-use binary_proc::find_centroid;
+use binary_proc::binaryproc_main;
 const sobel_3x3_x: [i8;9] = [
     -1,0,1,
     -2,0,2,
@@ -11,13 +11,8 @@ const sobel_3x3_x: [i8;9] = [
 
 fn main() {
     println!("Hello, world!");
-
-    let image_path = "images/lena.jpg";
-
-    let image = image::open(&image_path)
-        .expect("No image found at provided path")
-        .to_rgba8();
-
-    find_centroid();
+    
+    // find_centroid();
+    binaryproc_main();
     // display_image("", &image, 500, 500);
 }
