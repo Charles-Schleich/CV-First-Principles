@@ -1,22 +1,42 @@
-
-use image::{GrayImage, ImageBuffer, Luma, Pixel, Rgb, RgbImage, buffer::ConvertBuffer};
+use image::{GenericImage, GrayImage, ImageBuffer, Luma, Pixel, Rgb, RgbImage, buffer::ConvertBuffer};
 use imageproc::{rect::Region, window::display_image};
 use nalgebra::{Const, Matrix4, MatrixN, OMatrix};
 use std::env;
 use show_image::{ImageView, ImageInfo, create_window};
 use std::f64::consts::PI;
 
+pub fn gaussian_blur_image( image : RgbImage, gaussian : Vec<Vec<f64>>, kernel_size:u32){
+    let k_size_half = (kernel_size-1)/2;
 
+    for i in 0..(image.height()){
+        for j in 0..(image.width()){
 
-pub fn filter_gaussian(image:RgbImage){
-    
+            for (k,inner) in gaussian.iter().enumerate(){
+                for (l, value) in inner.iter().enumerate(){
+                    if (i-(k as u32) < 0) | 
+                       (i+(k as u32) < image.height()) | 
+                       (j-(l as u32) < 0) | 
+                       (j+(l as u32) < image.width()) 
+                    { continue
+        
+                    }
+
+                }
+            }
+            //  maybe use this ? 
+            // image.sub_image(x, y, width, height)
+
+            // image.width()-g_w as u32
+            // image.height()-g_h as u32
+        }    
+    }
 }
 
 pub fn create_gaussian(width:u32,height:u32, sigma:f64) -> GrayImage{
     // let mut kernel = Vec::new();
     // let mut img = RgbImage::new(32, 32);
     let mut img = GrayImage::new(width, height);
-    let mut vec_vec:Vec<Vec<f64>> = Vec::new();
+    let mut vec_vec : Vec<Vec<f64>> = Vec::new();
     // This Shifts center of Gaussian Kernel to middle of image
     let w2 = (width/2) as f64;
     let h2 = (height/2) as f64;
@@ -76,11 +96,11 @@ pub fn filterproc_main(){
 
     // let w= 16;
     // let h= 16;
-    let w= 25;
-    let h= 25;
+    let k= 25;
+    let sigma= (k as f64)/(2.0*PI);
     // create_gaussian_nalgebra(4,4,4.0);
-    let gaussian = create_gaussian(w,h, 4.0);
-    let out_path = format!("images/kernel_output/gaussian_{}_{}.png",w,h);
+    let gaussian = create_gaussian(k,k, sigma);
+    let out_path = format!("images/kernel_output/gaussian_{}_{}.png",k,k);
     let image_colour:RgbImage = gaussian.convert();
     image_colour.save(out_path).unwrap();
 
