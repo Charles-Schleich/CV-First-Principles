@@ -45,13 +45,16 @@ pub fn find_min_second_moment(image:&GrayImage, x_mid:u32, y_mid:u32) {
     let mut a:f64 = 0.0;
     let mut b:f64 = 0.0;
     let mut c:f64 = 0.0 ;
-    for (x,y,px) in image.enumerate_pixels(){
-        let x = x as f64;
-        let y = y as f64;
+    for (i,j,px) in image.enumerate_pixels(){
+        let i = i as f64;
+        let j = j as f64;
         if px.0[0] > 128 {
-            a += (x-x_mid).powi(2);
-            b += ((x-x_mid)*(y-y_mid) ).powi(2);
-            c += (y-y_mid).powi(2);
+            a += (i-x_mid).powi(2);
+            b += (j-x_mid)*(j-y_mid);
+            c += (j-y_mid).powi(2);
+            // a += (x_mid).powi(2);
+            // b += (x_mid)*(y_mid);
+            // c += (y_mid).powi(2);
         }
     }
     b=b*2.0;
@@ -60,6 +63,7 @@ pub fn find_min_second_moment(image:&GrayImage, x_mid:u32, y_mid:u32) {
     let c_fl = c as f64;
     let theta = b_fl.atan2(a_fl-c_fl)/2.0;
     // E = asin^2(theta) - bsin(theta)cos(theta) + csin^2(theta);
+    // tan2(theta) = b/(a-c)
     println!("theta = {}",theta.to_degrees());
 }
 
