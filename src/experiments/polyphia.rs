@@ -9,10 +9,10 @@
 
 // 3a. Implement video processing Step using ffmpeg bindings or gstreamer
 //     Might have to do some converstions with image proc
+// https://github.com/meh/rust-ffmpeg
 
 // 4a. see if i can use Rust CUDA in order to speed this up 
 //  https://github.com/Rust-GPU/Rust-CUDA
-
 
 pub fn write(input_path:&str) {
     // input_path:&str
@@ -46,14 +46,14 @@ pub fn polyphia_main(){
     let mut rgb_image = image.into_rgb8();
     for (x,y,px) in rgb_image.enumerate_pixels_mut(){
         let [mut r,mut g,mut b]= px.0;
-        if r > g && r > b { // red dominant
+        if r > g && r > b { 
              if g > b {
                 b=g;
             } else {
                 g=b;
             }
-            g = mute_col(g,0.9);
-            b = mute_col(b,0.9);
+            // g = mute_col(g,0.9);
+            // b = mute_col(b,0.9);
             // r = mute_col(r,0.5);
         } else if g >= r && g >= b { // green dominant 
             r = b;
