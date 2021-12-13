@@ -56,11 +56,13 @@ pub fn polyphia_main(){
             b = mute_col(b,0.9);
             // r = mute_col(r,0.5);
         } else if g >= r && g >= b { // green dominant 
-            r = g;
-            b = g;
-        } else if b >= r && b >= b { // blue dominant
             r = b;
             g = b;
+        } else if b >= r && b >= b { // blue dominant
+            r = g;
+            b = g;
+        } else {
+            println!("{} {} {}",r,g,b);
         }
 
         px.0 = [r,g,b];
