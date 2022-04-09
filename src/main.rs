@@ -24,7 +24,9 @@ mod filters;
 use filters::filterproc_main;
 
 mod experiments;
-use experiments::polyphia_main;
+use experiments::rgb_only_attempt;
+
+use crate::experiments::rgb_hsl_attempt;
 
 fn main() {
     println!("Hello, world!");
@@ -32,5 +34,6 @@ fn main() {
     // binaryproc_main();
     // filterproc_main();
     // display_image("", &image, 500, 500);
-    polyphia_main();
+    // rgb_only_attempt();
+    rgb_hsl_attempt();
 }
